@@ -213,12 +213,17 @@ def load_user_tools():
             except Exception as e:
                 print(f"Error loading user tool {filename}: {str(e)}", file=sys.stderr)
 
+import Commands.commands_asset_tools as commands_asset_tools
+import Commands.commands_blueprints as commands_blueprints
+
 def main():
     """Main entry point for the Unreal MCP bridge."""
     print("Starting Unreal MCP bridge...", file=sys.stderr)
     try:
         load_commands()  # Load built-in commands
         load_user_tools()  # Load user-defined tools
+        commands_asset_tools.register_all(mcp)
+        commands_blueprints.register_all(mcp)
         mcp.run()  # Start the MCP bridge
     except Exception as e:
         print(f"Error starting MCP bridge: {str(e)}", file=sys.stderr)
